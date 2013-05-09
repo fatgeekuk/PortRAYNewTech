@@ -1,4 +1,5 @@
-# README.md - part of PortRAY NewTech Developed under GPLv3 by Peter (fatgeekuk) Morris. See https://github.com/fatgeekuk/PortRAYNewTech
+PortRAY NewTech
+===============
 
 This is the very early beginnings of a new implementation of my old raytracer (PortRAY)
 
