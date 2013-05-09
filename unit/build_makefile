@@ -1,0 +1,56 @@
+#!/usr/bin/ruby
+
+# build_makefile - part of PortRAY NewTech Developed under GPLv3 by Peter (fatgeekuk) Morris. See https://github.com/fatgeekuk/PortRAYNewTech
+
+@files = []
+@tests = []
+
+def handleFile filename
+  @files << filename
+  local_tests = []
+  local_dependencies = []
+  File.open(filename) do |file|
+    file.each_line do |line|
+      if line =~ /^#include "(.*)"/
+        if $1 =~ /(^\.\.\/\.\.\/.*)/
+          local_dependencies << $1.gsub(/^\.\.\//, '')
+        end
+      end
+      if line =~ /^void (test_[^(]*)/
+        @tests << $1
+        local_tests << $1
+      end
+    end
+  end
+  header_file = filename.gsub(/\.c$/, '.h')
+  File.open(header_file, 'w') do |file|
+    local_tests.each{|test| file.puts("void #{ test }();")}
+  end
+  local_dependencies
+end
+
+def generateTestIndex
+  File.open('test_index.c', 'w') do |file|
+    @files.each do |filename|
+      targeth = filename.gsub(/\.c$/, '.h')
+      
+      file.puts "#include \"#{ targeth }\""
+    end
+    file.puts
+    file.puts "int (*tests[])() ={#{@tests.join(', ')}};"
+    file.puts "int test_count=#{ @tests.length };"
+  end
+end
+
+targets = []
+ARGV.each do |arg|
+  target = arg.gsub(/\.c$/, '.o')
+  targets << target
+  dependencies = handleFile(arg)
+  puts "#{ target }: #{ arg } #{ dependencies.join(' ') }"
+  puts ""
+  generateTestIndex
+end
+
+puts "all: #{ targets.join(' ')}"
+puts ""

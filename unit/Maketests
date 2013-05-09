@@ -1,0 +1,8 @@
+tests/ring_list_tests.o: tests/ring_list_tests.c ../src/ring_list.c
+
+tests/targa_tests.o: tests/targa_tests.c ../src/targa.c
+
+tests/vectors_test.o: tests/vectors_test.c ../src/vectors.c
+
+all: tests/ring_list_tests.o tests/targa_tests.o tests/vectors_test.o
+

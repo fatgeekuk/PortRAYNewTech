@@ -1,0 +1,7 @@
+*.o
+unit/tests/*.h
+unit/test_index.c
+unit/tester
+src/grammar.c
+src/grammar.h
+dummy_writer
