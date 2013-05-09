@@ -1,4 +1,4 @@
-# ring_list_tests.c - part of PortRAY NewTech Developed under GPLv3 by Peter (fatgeekuk) Morris. See https://github.com/fatgeekuk/PortRAYNewTech
+/* ring_list_tests.c - part of PortRAY NewTech Developed under GPLv3 by Peter (fatgeekuk) Morris. See https://github.com/fatgeekuk/PortRAYNewTech */
 
 #include <stdlib.h>
 #include "../test_helper.h"

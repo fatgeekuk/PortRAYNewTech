@@ -1,6 +1,6 @@
 %{
 
-# from grammar.y - part of PortRAY NewTech Developed under GPLv3 by Peter (fatgeekuk) Morris. See https://github.com/fatgeekuk/PortRAYNewTech
+/* from grammar.y - part of PortRAY NewTech Developed under GPLv3 by Peter (fatgeekuk) Morris. See https://github.com/fatgeekuk/PortRAYNewTech */
 
 #include <stdio.h>
 #include <string.h>
