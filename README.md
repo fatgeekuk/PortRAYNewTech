@@ -13,17 +13,17 @@ Getting Started
 
 running the tests :-
 
-> make tests
+    make tests
 
 making portray :-
 
-> make portray
+    make portray
 
 executing portray :-
 
-bin/portray examples/example_1.sce
+    bin/portray examples/example_1.sce
 
-This will eventually generate a TGA file of the resultant scene.
+This will eventually generate a TGA file of the resultant scene. At the moment, it will simply acknowledge that it does not HATE the example scene file.
 
 Review the WIKI for progress (or lack thereof)
 
