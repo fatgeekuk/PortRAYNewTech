@@ -5,6 +5,7 @@
 
 void test_vectors(){
 	Vec a, b, c, d;
+	double x;
 	
 	CONTEXT("Vectors")
 		CONTEXT("initialisation")
@@ -19,20 +20,20 @@ void test_vectors(){
 	
 			CONTEXT("COMPARISON")
 				vecSet(1.0, 2.0, 3.0, &c);
-				expect(vectorEqual(&a, &c), "a should be equal to c");
-				expect_not(vectorEqual(&a, &b), "a should not equal b");
+				expect(vecEqual(&a, &c), "a should be equal to c");
+				expect_not(vecEqual(&a, &b), "a should not equal b");
 		
 			NEXT_CONTEXT("ADD")
-				addVector(&a, &c, &d);
-				expect(vectorEqual(&d, &b), "a+c does not equal b");
+				vecAdd(&a, &c, &d);
+				expect(vecEqual(&d, &b), "a+c does not equal b");
 	
 			NEXT_CONTEXT("SUB")
-				subVector(&b, &a, &d);
-				expect(vectorEqual(&d, &c), "b-a does not equal c");
+				vecSub(&b, &a, &d);
+				expect(vecEqual(&d, &c), "b-a does not equal c");
 		
 			NEXT_CONTEXT("SCALE")
-				scaleVector(2.0, &a, &b);
-				expect(vectorEqual(&d, &a), "twice a does not equal b");
+				vecScale(2.0, &a, &b);
+				expect(vecEqual(&d, &a), "twice a does not equal b");
 				
 			NEXT_CONTEXT("COPY")
 				vecCopy(&a, &b);
@@ -40,6 +41,9 @@ void test_vectors(){
 				expect(dblEqual(b.y, 2.0), "y should be two!");
 				expect(dblEqual(b.z, 3.0), "z should be three!");
 				
+			NEXT_CONTEXT("DOT")
+				x = vecDot(&a, &a);
+				expect(dblEqual(x, 14.0), "dot should be 14");
 			END_CONTEXT
 	
 		END_CONTEXT

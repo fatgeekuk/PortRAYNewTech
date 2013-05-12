@@ -7,3 +7,5 @@ typedef struct Camera {
 	double width, height, depth;
 	int resX, resY;
 } Camera;
+
+int camValidate();

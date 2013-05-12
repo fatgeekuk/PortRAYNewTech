@@ -8,9 +8,10 @@ typedef struct pt
 typedef point Vec;
 
 Vec *vecSet(double x, double y, double z, Vec *A);
-int vectorEqual(Vec *a, Vec *b);
-Vec *addVector(Vec *a, Vec *b, Vec *c);
-Vec *subVector(Vec *a, Vec *b, Vec *c);
-Vec *scaleVector(double s, Vec *a, Vec *b);
+int vecEqual(Vec *a, Vec *b);
+Vec *vecAdd(Vec *a, Vec *b, Vec *c);
+Vec *vecSub(Vec *a, Vec *b, Vec *c);
+Vec *vecScale(double s, Vec *a, Vec *b);
 Vec *vecCopy(Vec *source, Vec *target);
+double vecDot(Vec *a, Vec *b);
 void vecPrint(Vec *a);

@@ -2,6 +2,7 @@
 
 /* from grammar.y - part of PortRAY NewTech Developed under GPLv3 by Peter (fatgeekuk) Morris. See https://github.com/fatgeekuk/PortRAYNewTech */
 
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include "../headers/storage.h"
@@ -18,6 +19,10 @@ int yywrap()
 {
         return 1;
 } 
+
+void reportError(char *message){
+  fprintf(stderr, "error at line %d, %s\n", linenum, message);
+}
   
 int main(int argc, char *argv[])
 {
@@ -209,6 +214,7 @@ camera_close:
           printf("  Height : %f\n", camera.height);
           printf("  Depth  : %f\n", camera.depth);
           printf("  resolution: (%d %d)\n", camera.resX, camera.resY);
+          camValidate();
           printf("Closing Camera\n");
         }
         

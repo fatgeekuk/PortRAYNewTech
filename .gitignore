@@ -5,3 +5,4 @@ unit/tester
 src/grammar.c
 src/grammar.h
 dummy_writer
+bin
