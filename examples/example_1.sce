@@ -2,7 +2,7 @@
 // units are in meters.
 camera {
   at (100 10 1)
-  look-at (0. 0. 0.)
+  look-at (0 0 0)
   down (0. -1. 0.)
   width 36.
   height 24.

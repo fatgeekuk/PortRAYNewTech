@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 #include <string.h>
-#include "../headers/vectors.h"
+#include "../headers/storage.h"
 
 extern FILE *yyin;
 extern int linenum;
@@ -195,10 +195,22 @@ light_colour_command:
         };
 
 camera_definition:
-        camera_open camera_commands CLOSE_CURLIES
+        camera_open camera_commands camera_close
         {
           printf("Encountered Camera Definition\n");
         };
+        
+camera_close:
+        CLOSE_CURLIES {
+          printf("  At     : "); vecPrint(&(camera.at)); printf("\n");
+          printf("  Look at: "); vecPrint(&(camera.lookAt)); printf("\n");
+          printf("  Down   : "); vecPrint(&(camera.down)); printf("\n");
+          printf("  Width  : %f\n", camera.width);
+          printf("  Height : %f\n", camera.height);
+          printf("  Depth  : %f\n", camera.depth);
+          printf("  resolution: (%d %d)\n", camera.resX, camera.resY);
+          printf("Closing Camera\n");
+        }
         
 camera_open:
         TOK_CAMERA OPEN_CURLIES
@@ -232,51 +244,51 @@ cam_resolution_command:
 cam_res_indeces:
         integer integer
         {
-          printf("received a resolution command(%d %d)\n", $1, $2);
+          camera.resX = $1;
+          camera.resY = $2;
         };
         
 cam_width_command:
         TOK_WIDTH FLOAT
         {
-          printf("received camera width command\n");
+          camera.width = $2;
         };
         
 cam_height_command:
         TOK_HEIGHT FLOAT
         {
-          printf("received camera height command\n");
+          camera.height = $2;
         };
 cam_depth_command:
         TOK_DEPTH FLOAT
         {
-          printf("received camera depth command\n");
+          camera.depth = $2;
         };
-
 
 cam_lookat_command:
         TOK_LOOKAT vector
         {
-          printf("received a camera look at command\n");
+          vecCopy(&$2, &(camera.lookAt));
         };
 
         
 cam_at_command:
         TOK_AT vector
         {
-          printf("received a camera AT command\n");
+          vecCopy(&$2, &(camera.at));
         };
         
 cam_down_command:
        TOK_DOWN vector
        {
-         printf("received a camera DOWN command\n");
+          vecCopy(&$2, &(camera.down));
        };
        
 vector: OPENBRACKET FLOAT FLOAT FLOAT TOK_CLOSEBRACKET
       {
-        printf("received a vector %f, %f, %f\n", $2, $3, $4);
+        vecSet($2, $3, $4, &$$);
       };
             
-integer: FLOAT { $$ = (int)$1; printf("found integer %d\n", $$);} ;
+integer: FLOAT { $$ = (int)$1; } ;
       
   

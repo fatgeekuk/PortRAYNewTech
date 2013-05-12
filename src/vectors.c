@@ -2,7 +2,7 @@
 
 #include "../headers/vectors.h"
 
-Vec *setVector(double x, double y, double z, Vec *A){
+Vec *vecSet(double x, double y, double z, Vec *A){
 	A->x = x;
 	A->y = y;
 	A->z = z;
@@ -35,4 +35,15 @@ Vec *scaleVector(double s, Vec *a, Vec *b){
 	b->y = s * a->y;
 	b->z = s * a->z;
 	return b;
+}
+
+Vec *vecCopy(Vec *source, Vec *target){
+	target->x = source->x;
+	target->y = source->y;
+	target->z = source->z;
+	return target;
+}
+
+void vecPrint(Vec *a){
+	printf("(%f %f %f)", a->x, a->y, a->z);
 }

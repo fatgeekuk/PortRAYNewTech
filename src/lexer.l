@@ -9,7 +9,7 @@
 int linenum = 1;
 %}
 %%
--?[0-9]+(\.[0-9]+)?       { yylval.dValue = atof(yytext); printf("found float\n"); return FLOAT; };
+-?[0-9]+(\.[0-9]+)?       { yylval.dValue = atof(yytext); return FLOAT; };
 camera                  return TOK_CAMERA;
 \{                      return OPEN_CURLIES;
 \}                      return CLOSE_CURLIES;

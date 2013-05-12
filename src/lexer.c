@@ -1,5 +1,6 @@
+#line 2 "lexer.c"
 
-#line 3 "<stdout>"
+#line 4 "lexer.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -522,8 +523,8 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "src/lexer.l"
-#line 2 "src/lexer.l"
+#line 1 "lexer.l"
+#line 2 "lexer.l"
 
 /* from lexer.l - part of PortRAY NewTech Developed under GPLv3 by Peter (fatgeekuk) Morris. See https://github.com/fatgeekuk/PortRAYNewTech */
 
@@ -532,7 +533,7 @@ char *yytext;
 #include "grammar.h"
 
 int linenum = 1;
-#line 536 "<stdout>"
+#line 537 "lexer.c"
 
 #define INITIAL 0
 
@@ -714,9 +715,9 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 11 "src/lexer.l"
+#line 11 "lexer.l"
 
-#line 720 "<stdout>"
+#line 721 "lexer.c"
 
 	if ( !(yy_init) )
 		{
@@ -801,146 +802,146 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 12 "src/lexer.l"
-{ yylval.dValue = atof(yytext); printf("found float\n"); return FLOAT; };
+#line 12 "lexer.l"
+{ yylval.dValue = atof(yytext); return FLOAT; };
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 13 "src/lexer.l"
+#line 13 "lexer.l"
 return TOK_CAMERA;
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 14 "src/lexer.l"
+#line 14 "lexer.l"
 return OPEN_CURLIES;
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 15 "src/lexer.l"
+#line 15 "lexer.l"
 return CLOSE_CURLIES;
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 16 "src/lexer.l"
+#line 16 "lexer.l"
 return OPENBRACKET;
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 17 "src/lexer.l"
+#line 17 "lexer.l"
 return TOK_CLOSEBRACKET;
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 18 "src/lexer.l"
+#line 18 "lexer.l"
 return TOK_AT;
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 19 "src/lexer.l"
+#line 19 "lexer.l"
 return TOK_DOWN;
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 20 "src/lexer.l"
+#line 20 "lexer.l"
 return TOK_LOOKAT;
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 21 "src/lexer.l"
+#line 21 "lexer.l"
 return TOK_WIDTH;
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 22 "src/lexer.l"
+#line 22 "lexer.l"
 return TOK_HEIGHT;
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 23 "src/lexer.l"
+#line 23 "lexer.l"
 return TOK_DEPTH;
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 24 "src/lexer.l"
+#line 24 "lexer.l"
 return TOK_RESOLUTION;
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 25 "src/lexer.l"
+#line 25 "lexer.l"
 return LIGHT;
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 26 "src/lexer.l"
+#line 26 "lexer.l"
 return POSITION;
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 27 "src/lexer.l"
+#line 27 "lexer.l"
 return COLOUR;
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 28 "src/lexer.l"
+#line 28 "lexer.l"
 return OBJECT;
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 29 "src/lexer.l"
+#line 29 "lexer.l"
 return SPHERE;
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 30 "src/lexer.l"
+#line 30 "lexer.l"
 return PLANE;
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 31 "src/lexer.l"
+#line 31 "lexer.l"
 return CENTER;
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 32 "src/lexer.l"
+#line 32 "lexer.l"
 return RADIUS;
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 33 "src/lexer.l"
+#line 33 "lexer.l"
 return NORMAL;
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 34 "src/lexer.l"
+#line 34 "lexer.l"
 return MATERIAL;
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 35 "src/lexer.l"
+#line 35 "lexer.l"
 return DIFFUSE;
 	YY_BREAK
 case 25:
 /* rule 25 can match eol */
 YY_RULE_SETUP
-#line 36 "src/lexer.l"
+#line 36 "lexer.l"
 linenum++;
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 37 "src/lexer.l"
+#line 37 "lexer.l"
 /* ignore whitespace */;
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 38 "src/lexer.l"
+#line 38 "lexer.l"
 /* ignore comments */;
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 39 "src/lexer.l"
+#line 39 "lexer.l"
 ECHO;
 	YY_BREAK
-#line 944 "<stdout>"
+#line 945 "lexer.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1937,7 +1938,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 39 "src/lexer.l"
+#line 39 "lexer.l"
 
 
 
