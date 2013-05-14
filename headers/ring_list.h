@@ -46,3 +46,10 @@ void rlReclaimList(rlNode *list);
 	whole program will exit.
 
 */
+
+void *rlPopDataFromHead(rlNode *list);
+/* pull the first item off the list and return it. Note, NO CHECKING IS PERFORMED! */
+
+int rlListEmpty(rlNode *list);
+
+int rlListLength(rlNode *list);

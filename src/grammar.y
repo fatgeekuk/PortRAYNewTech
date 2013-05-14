@@ -10,6 +10,8 @@
 extern FILE *yyin;
 extern int linenum;
  
+rlNode *parserStack;
+ 
 void yyerror(const char *str)
 {
         fprintf(stderr,"error: %s at line %d\n",str, linenum);
@@ -26,11 +28,24 @@ void reportError(char *message){
   
 int main(int argc, char *argv[])
 {
+    rlInit();
+    setupStorage();
+    
+    parserStack = rlCreateList();
+
     /* Call the lexer, then quit. */
     yyin=fopen(argv[1],"r");
     yyparse();
     fclose(yyin);
+    
+    rlReclaimList(parserStack);
+    
+    printf("scene contains %d items\n", rlListLength(sceneList));
     return 0;
+}
+
+void *currentParserNode(){
+  return(parserStack->next->data);
 }  
 
 %}
@@ -64,13 +79,27 @@ command:
         ;
         
 object_definition:
-        object_open object_commands CLOSE_CURLIES
+        object_open object_commands object_close;
         
 object_open:
         OBJECT OPEN_CURLIES
         {
-          printf("Encountered object OPEN\n");
+          /* allocate an object and add it to the head of the parser stack */
+          object *answer;
+          answer = malloc(sizeof(object));
+          if (answer == NULL){
+            printf("unable to allocate object\n");
+            exit(1);
+          }
+          rlAddDataToHead(parserStack, answer);
         };
+
+object_close: CLOSE_CURLIES
+        {
+          object *answer;
+          answer = (object *)rlPopDataFromHead(parserStack);
+          rlAddDataToHead(sceneList, (void *)answer);
+        }
         
 object_commands: /* empty */
        | object_commands object_command;
@@ -84,7 +113,7 @@ shape_definition:
      | plane_definition;
      
 sphere_definition: 
-    sphere_open sphere_commands CLOSE_CURLIES
+    sphere_open sphere_commands sphere_close
     {
       printf("read a sphere definition\n");
     };
@@ -92,8 +121,26 @@ sphere_definition:
 sphere_open:
     SPHERE OPEN_CURLIES
     {
-      printf("opened a sphere\n");
+      /* allocate a sphere and place it on the parserStack */
+      sphere *answer;
+      answer = malloc(sizeof(sphere));
+      if (answer == NULL){
+        printf("unable to allocate sphere\n");
+        exit(1);
+      }
+      rlAddDataToHead(parserStack, (void *)answer);
     };
+
+sphere_close: CLOSE_CURLIES
+    {
+      /* remove the sphere from the parser stack and place it into the object definition. */
+      sphere *sph;
+      sph = (sphere *)rlPopDataFromHead(parserStack);
+      
+      printf("defined a sphere with radius %f and center ", sph->radius);
+      vecPrint(&(sph->center));
+      ((object *)currentParserNode())->geomInfo = sph;
+    }
     
 sphere_commands: /* empty */
     | sphere_commands sphere_command;
@@ -105,13 +152,13 @@ sphere_command:
 sphere_center_command:
     CENTER vector
     {
-      printf("Defined Sphere Center\n");
+      vecCopy(&$2, &((sphere *)currentParserNode())->center);
     };
     
 sphere_radius_command:
     RADIUS FLOAT
     {
-      printf("Defined Sphere Radius\n");
+      ((sphere *)currentParserNode())->radius = $2;
     };
     
 plane_definition:

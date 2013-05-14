@@ -3,3 +3,8 @@
 #include "../headers/storage.h"
 
 Camera camera;
+rlNode *sceneList;
+
+void setupStorage(){
+	sceneList = rlCreateList();
+}

@@ -103,7 +103,39 @@ int rlFreeChainLength(){
 	return answer;
 }
 
+int rlListLength(rlNode *list){
+	int answer = 0;
+	rlNode *coaster;
+	
+	coaster = list->next;
+	while(coaster->data != NULL){
+		answer++;
+		coaster = coaster->next;
+	}
+	return answer;	
+}
+
 void rlReclaimList(rlNode *list){
 	list->prev->next = rlFreeChainPtr;
 	rlFreeChainPtr = list;
+}
+
+void *rlPopDataFromHead(rlNode *list){
+	rlNode *firstNode = list->next;
+	
+	/* remove node from list */
+	firstNode->prev->next = firstNode->next;
+	firstNode->next->prev = firstNode->prev;
+	
+	return rlReleaseNode(firstNode);
+}
+
+int rlListEmpty(rlNode *list){
+	if (list->next == list){
+		return -1;
+	}
+	else
+	{
+		return 0;
+	}
 }

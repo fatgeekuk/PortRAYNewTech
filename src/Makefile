@@ -1,13 +1,15 @@
 ../bin/dummy_writer: dummy_writer.o vectors.o targa.o
 	gcc -o $@ $< vectors.o targa.o -lm
 
-../bin/portray: grammar.o vectors.o targa.o lexer.o storage.o camera.o
-	gcc -o $@ grammar.o vectors.o targa.o lexer.o storage.o camera.o -lm
+../bin/portray: grammar.o vectors.o targa.o lexer.o storage.o camera.o ring_list.o
+	gcc -o $@ grammar.o vectors.o targa.o lexer.o storage.o camera.o ring_list.o -lm
 	
 .c.o:
 	gcc -o $@ -g -c -O2 $<
 
 vectors.o: vectors.c
+
+ring_list.o: ring_list.c
 
 camera.o: camera.c ../headers/storage.h ../headers/camera.h ../headers/vectors.h
 

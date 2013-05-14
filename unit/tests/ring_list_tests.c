@@ -96,6 +96,26 @@ void test_ring_lists(){
 			
 			rlReclaimList(a);
 			expect(intEqual(i+7, rlFreeChainLength()), "the 6 items plus their header are 7!");
+		
+		NEXT_CONTEXT("pulling items of the head of the list is easy")
+			a = rlCreateList();
+			rlAddDataToTail(a, (void *)0x0a);
+			rlAddDataToTail(a, (void *)0x0b);
+			rlAddDataToTail(a, (void *)0x0c);
+			expect(intEqual(0, rlListEmpty(a)), "List is not currently empty");
+			expect(intEqual(3, rlListLength(a)), "in fact, list should be three long");
+			
+			i = (int)rlPopDataFromHead(a);
+			expect(intEqual(i, 0x0a), "first thing pulled off is 'a'");
+			
+			i = (int)rlPopDataFromHead(a);
+			expect(intEqual(i, 0x0b), "second thing pulled off is 'b'");
+
+			i = (int)rlPopDataFromHead(a);
+			expect(intEqual(i, 0x0c), "last thing pulled off is 'c'");
+			
+			expect(intEqual(-1, rlListEmpty(a)), "the list should now be empty");
+
 			
 		END_CONTEXT
 	END_CONTEXT
