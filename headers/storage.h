@@ -3,9 +3,9 @@
 #include "../headers/ring_list.h"
 #include "../headers/vectors.h"
 #include "../headers/camera.h"
+#include "../headers/object.h"
 #include "../headers/geometry/sphere.h"
 #include "../headers/geometry/plane.h"
-#include "../headers/object.h"
 
 extern Camera camera;
 extern rlNode *sceneList;

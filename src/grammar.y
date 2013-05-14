@@ -28,6 +28,9 @@ void reportError(char *message){
   
 int main(int argc, char *argv[])
 {
+    rlNode *l;
+    object *o;
+    
     rlInit();
     setupStorage();
     
@@ -41,6 +44,14 @@ int main(int argc, char *argv[])
     rlReclaimList(parserStack);
     
     printf("scene contains %d items\n", rlListLength(sceneList));
+    l = sceneList->next;
+    while (l->data != NULL){
+      o = (object *)l->data;
+      
+      (o->gType->print)(o->gInfo);
+      
+      l = l->next;
+    }
     return 0;
 }
 
@@ -131,11 +142,8 @@ sphere_close: CLOSE_CURLIES
       sphere *sph;
       sph = (sphere *)rlPopDataFromHead(parserStack);
       
-      printf("defined a sphere with radius %f and center ", sph->radius);
-      vecPrint(&(sph->center));
-      printf("\n");
-
-      ((object *)currentParserNode())->geomInfo = sph;
+      ((object *)currentParserNode())->gInfo = sph;
+      ((object *)currentParserNode())->gType = &sphereGeomType;
     }
     
 sphere_commands: /* empty */
@@ -169,17 +177,12 @@ plane_open:
 plane_close:
     CLOSE_CURLIES
     {
-    /* remove the plane from the parser stack and place it into the object definition. */
-    plane *pla;
-    pla = (plane *)rlPopDataFromHead(parserStack);
+      /* remove the plane from the parser stack and place it into the object definition. */
+      plane *pla;
+      pla = (plane *)rlPopDataFromHead(parserStack);
     
-    printf("defined a plane with position ");
-    vecPrint(&(pla->position));
-    printf(" and normal ");
-    vecPrint(&(pla->normal));
-    printf("\n");
-    ((object *)currentParserNode())->geomInfo = pla;
-    
+      ((object *)currentParserNode())->gInfo = pla;
+      ((object *)currentParserNode())->gType = &planeGeomType;
     }
    
 plane_commands: /* empty */

@@ -6,3 +6,5 @@ typedef struct plane {
 } plane;
 
 plane *allocPlane();
+void initPlane();
+extern geomType planeGeomType;

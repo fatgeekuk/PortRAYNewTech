@@ -7,4 +7,8 @@ rlNode *sceneList;
 
 void setupStorage(){
 	sceneList = rlCreateList();
+	
+	/* initialise geometries */
+	initSphere();
+	initPlane();
 }

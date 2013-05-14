@@ -6,3 +6,5 @@ typedef struct sphere {
 } sphere;
 
 sphere *allocSphere();
+void initSphere();
+extern geomType sphereGeomType;

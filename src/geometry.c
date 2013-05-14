@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include "../headers/object.h"
 #include "../headers/vectors.h"
 #include "../headers/geometry/plane.h"
 #include "../headers/geometry/sphere.h"
