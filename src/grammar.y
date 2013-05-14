@@ -122,13 +122,7 @@ sphere_open:
     SPHERE OPEN_CURLIES
     {
       /* allocate a sphere and place it on the parserStack */
-      sphere *answer;
-      answer = malloc(sizeof(sphere));
-      if (answer == NULL){
-        printf("unable to allocate sphere\n");
-        exit(1);
-      }
-      rlAddDataToHead(parserStack, (void *)answer);
+      rlAddDataToHead(parserStack, allocSphere());
     };
 
 sphere_close: CLOSE_CURLIES
@@ -139,6 +133,8 @@ sphere_close: CLOSE_CURLIES
       
       printf("defined a sphere with radius %f and center ", sph->radius);
       vecPrint(&(sph->center));
+      printf("\n");
+
       ((object *)currentParserNode())->geomInfo = sph;
     }
     
@@ -162,13 +158,29 @@ sphere_radius_command:
     };
     
 plane_definition:
-   plane_open plane_commands CLOSE_CURLIES;
+   plane_open plane_commands plane_close;
    
 plane_open: 
     PLANE OPEN_CURLIES
    {
-     printf("opened a plane\n");
+     rlAddDataToHead(parserStack, allocPlane());
    };
+   
+plane_close:
+    CLOSE_CURLIES
+    {
+    /* remove the plane from the parser stack and place it into the object definition. */
+    plane *pla;
+    pla = (plane *)rlPopDataFromHead(parserStack);
+    
+    printf("defined a plane with position ");
+    vecPrint(&(pla->position));
+    printf(" and normal ");
+    vecPrint(&(pla->normal));
+    printf("\n");
+    ((object *)currentParserNode())->geomInfo = pla;
+    
+    }
    
 plane_commands: /* empty */
     | plane_commands plane_command;
@@ -180,13 +192,13 @@ plane_command:
 plane_position_command:
   POSITION vector
   {
-    printf("defined a plane position vector\n");
+    vecCopy(&$2, &((plane *)currentParserNode())->position);
   };
   
 plane_normal_command:
   NORMAL vector
   {
-    printf("defined the plane normal\n");
+    vecCopy(&$2, &((plane *)currentParserNode())->normal);
   };
 
 material_definition:

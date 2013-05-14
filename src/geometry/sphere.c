@@ -1,6 +1,6 @@
 /* sphere.c - part of PortRAY NewTech Developed under GPLv3 by Peter (fatgeekuk) Morris. See https://github.com/fatgeekuk/PortRAYNewTech */
 
-void *allocSphere(){
+sphere *allocSphere(){
 	sphere *answer;
 	
 	answer = malloc(sizeof(sphere));

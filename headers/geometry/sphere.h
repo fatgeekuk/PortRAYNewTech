@@ -4,3 +4,5 @@ typedef struct sphere {
 	Vec center;
 	double radius;
 } sphere;
+
+sphere *allocSphere();
