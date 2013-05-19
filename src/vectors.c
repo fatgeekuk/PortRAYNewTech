@@ -51,3 +51,7 @@ void vecPrint(Vec *a){
 double vecDot(Vec *a, Vec *b){
 	return (a->x * b->x + a->y * b->y + a->z * b->z);
 }
+
+double vecLength(Vec *a){
+	return sqrt(vecDot(a, a));
+}

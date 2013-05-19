@@ -30,61 +30,6 @@ typedef struct node {
 reportNode *reportBase = NULL;
 reportNode *current = NULL;
 
-
-void walkTree(reportNode *node, int depth){
-	int i;
-	failureNode *fail;
-	
-	for (i=0; i<depth; i++){
-		printf("  ");
-	}
-	printf("%s",  node->description);
-	
-	if (treePassing(node, 0)){
-		printf(colouredText, GREEN, " PASSED!");
-		printf("\n");
-	} else {
-		printf("\n");
-		fail = node->failure;
-		while(fail != NULL){
-			for (i=0; i<depth+2; i++){
-				printf("  ");
-			}
-			printf(colouredText, RED,  fail->message);
-			printf("\n");
-			fail = fail->next;
-		}
-
-		if(node->child != NULL){
-			walkTree(node->child, depth + 1);
-		}
-		
-		
-	}
-	if(node->next != NULL){
-		walkTree(node->next, depth);
-	}
-	
-}
-
-int treePassing(reportNode *node, int followSib){
-	if (node->failure == NULL){
-		if (node->child != NULL){
-			if (treePassing(node->child, -1) == 0){
-				return 0;
-			}
-		}
-		if (followSib != 0 && node->next != NULL){
-			if (treePassing(node->next, -1) == 0){
-				return 0;
-			}
-		}
-	} else {
-		return 0;
-	}
-	return -1;
-}
-
 reportNode *get_new_node(char *description){
 	reportNode *newNode;
 	newNode = (reportNode *)malloc(sizeof(reportNode));
@@ -144,14 +89,75 @@ void expect_not(int value, char* description){
 	expect(value == -1 ? 0 : -1, description);
 }
 
+void walkTree(reportNode *node, int depth){
+	int i;
+	failureNode *fail;
+	
+	for (i=0; i<depth; i++){
+		printf("  ");
+	}
+	
+	printf("%s",  node->description);
+	
+	if (depth > 0 && treePassing(node, 0)){
+		printf(colouredText, GREEN, " PASSED!");
+		printf("\n");
+	} else {
+		printf("\n");
+		fail = node->failure;
+		while(fail != NULL){
+			for (i=0; i<depth+2; i++){
+				printf("  ");
+			}
+			printf(colouredText, RED,  fail->message);
+			printf("\n");
+			fail = fail->next;
+		}
+
+		if(node->child != NULL){
+			walkTree(node->child, depth + 1);
+		}
+		
+		
+	}
+	if(node->next != NULL){
+		walkTree(node->next, depth);
+	}
+	
+}
+
+int treePassing(reportNode *node, int followSib){
+	if (node->failure == NULL){
+		if (node->child != NULL){
+			if (treePassing(node->child, -1) == 0){
+				return 0;
+			}
+		}
+		if (followSib != 0 && node->next != NULL){
+			if (treePassing(node->next, -1) == 0){
+				return 0;
+			}
+		}
+	} else {
+		return 0;
+	}
+	return -1;
+}
+
+
+
 int main(){
 	int i, result;
 	char buffer[200];
 	
 	printf("We have %d tests\n", test_count);
+	
+	push_description("Tests");
 	for(i=0; i<test_count; i++){
 		(tests[i])();
 	}
+	pop_description();
+	
 	printf("\n\n");
 	
 	sprintf(buffer, "Total(%d expectations)", total);

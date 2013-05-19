@@ -1,5 +1,6 @@
 /* test_helper.h - part of PortRAY NewTech Developed under GPLv3 by Peter (fatgeekuk) Morris. See https://github.com/fatgeekuk/PortRAYNewTech */
 
+#define FIRST_CONTEXT(description) next_description(description);
 #define CONTEXT(description) push_description(description);
 #define NEXT_CONTEXT(description) next_description(description);
 #define END_CONTEXT pop_description();

@@ -1,4 +1,4 @@
-/* vectors_test.c - part of PortRAY NewTech Developed under GPLv3 by Peter (fatgeekuk) Morris. See https://github.com/fatgeekuk/PortRAYNewTech */
+/* vectors_tests.c - part of PortRAY NewTech Developed under GPLv3 by Peter (fatgeekuk) Morris. See https://github.com/fatgeekuk/PortRAYNewTech */
 
 #include "../test_helper.h"
 #include "../../src/vectors.c"
@@ -44,6 +44,10 @@ void test_vectors(){
 			NEXT_CONTEXT("DOT")
 				x = vecDot(&a, &a);
 				expect(dblEqual(x, 14.0), "dot should be 14");
+			
+			NEXT_CONTEXT("LENGTH")
+				vecSet(0.0, 3.0, 4.0, &a);
+				expect(dblEqual(5.0, vecLength(&a)), "you gotta love pythagoras");
 			END_CONTEXT
 	
 		END_CONTEXT

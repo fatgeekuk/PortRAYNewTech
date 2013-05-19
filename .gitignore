@@ -2,6 +2,7 @@
 unit/tests/*.h
 unit/test_index.c
 unit/tester
+unit/Maketests
 src/grammar.c
 src/grammar.h
 dummy_writer
