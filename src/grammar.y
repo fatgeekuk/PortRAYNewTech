@@ -28,8 +28,6 @@ void reportError(char *message){
   
 int main(int argc, char *argv[])
 {
-    rlNode *l;
-    object *o;
     
     rlInit();
     setupStorage();
@@ -43,15 +41,7 @@ int main(int argc, char *argv[])
     
     rlReclaimList(parserStack);
     
-    printf("scene contains %d items\n", rlListLength(sceneList));
-    l = sceneList->next;
-    while (l->data != NULL){
-      o = (object *)l->data;
-      
-      (o->gType->print)(o->gInfo);
-      
-      l = l->next;
-    }
+    render(&camera, sceneList);
     
     return 0;
 }

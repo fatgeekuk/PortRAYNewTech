@@ -1,7 +1,7 @@
 // example_1.sce part of PortRAY NewTech Developed under GPLv3 by Peter (fatgeekuk) Morris. See https://github.com/fatgeekuk/PortRAYNewTech
 // units are in meters.
 camera {
-  at (100 10 1)
+  at (0 2 -10)
   look-at (0 0 0)
   down (0. -1. 0.)
   width 36.

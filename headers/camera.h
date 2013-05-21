@@ -9,3 +9,4 @@ typedef struct Camera {
 } Camera;
 
 int camValidate();
+Ray *camGenerateRay(Camera *camera, double x, double y, Ray *ray);

@@ -55,3 +55,15 @@ double vecDot(Vec *a, Vec *b){
 double vecLength(Vec *a){
 	return sqrt(vecDot(a, a));
 }
+
+Vec *vecNormalise(Vec *a, Vec *b){
+	return vecScale(1.0/vecLength(a), a, b);
+}
+
+Vec *vecProduct(Vec *a, Vec *b, Vec *c){
+	Vec Ans;
+	c->x = (a->y * b->z) - (a->z * b->y);
+	c->y = (a->z * b->x) - (a->x * b->z);
+	c->z = (a->x * b->y) - (a->y * b->x);
+	return c;
+}

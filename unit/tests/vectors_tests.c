@@ -48,8 +48,20 @@ void test_vectors(){
 			NEXT_CONTEXT("LENGTH")
 				vecSet(0.0, 3.0, 4.0, &a);
 				expect(dblEqual(5.0, vecLength(&a)), "you gotta love pythagoras");
+				
+			NEXT_CONTEXT("CROSSPRODUCT")
+				vecSet(0.0, 0.0, 1.0, &a);
+				vecSet(0.0, 1.0, 0.0, &b);
+				vecProduct(&a, &b, &c);
+				expect(dblEqual(0.0, vecDot(&a, &c)), "A*B should be at right angles to a");
+				expect(dblEqual(0.0, vecDot(&b, &c)), "A*B should be at right angles to b");
+				expect(dblEqual(1.0, vecLength(&c)), "and it should have unit length");
+				
+			NEXT_CONTEXT("NORMALISE")
+				vecSet(3.0, 2.0, 1.0, &a);
+				vecNormalise(&a, &a);
+				expect(dblEqual(1.0, vecLength(&a)), "A normalised vector should have unit length");
 			END_CONTEXT
-	
 		END_CONTEXT
 	END_CONTEXT
 }

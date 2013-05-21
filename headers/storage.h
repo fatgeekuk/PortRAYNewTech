@@ -2,6 +2,7 @@
 
 #include "../headers/ring_list.h"
 #include "../headers/vectors.h"
+#include "../headers/ray.h"
 #include "../headers/camera.h"
 #include "../headers/object.h"
 #include "../headers/geometry/sphere.h"

@@ -22,6 +22,7 @@ typedef struct failure {
 
 typedef struct node {
 	char *description;
+	void *parent;
 	void *next;
 	void *child;
 	failureNode *failure;
@@ -50,14 +51,17 @@ failureNode *record_failure(char *message){
 
 void push_description(char *description){
 	int i;
+	printf("pushing Desc: %s\n", description);
 	reportNode *newNode;
 	newNode = get_new_node(description);
 	newNode->next = NULL;
 	newNode->child = NULL;
 	if (reportBase == NULL){
 		reportBase = newNode;
+		newNode->parent = NULL;
 	} else {
 		current->child = newNode;
+		newNode->parent = (void *)current;
 	}
 	current = newNode;
 }
@@ -66,11 +70,14 @@ void next_description(char *description){
 	reportNode *newNode;
 	newNode = get_new_node(description);
 	current->next = newNode;
+	newNode->parent = current->parent;
 	current = newNode;
 }
 
-void pop_description(){
+void pop_description(){printf("POP\n");
 	if(description_ptr > 0) description_ptr--;
+	current = (reportNode *)current->parent;
+	
 }
 
 void expect(int value, char* description){
@@ -156,7 +163,6 @@ int main(){
 	for(i=0; i<test_count; i++){
 		(tests[i])();
 	}
-	pop_description();
 	
 	printf("\n\n");
 	

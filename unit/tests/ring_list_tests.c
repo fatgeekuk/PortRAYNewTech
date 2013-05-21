@@ -62,7 +62,6 @@ void test_ring_lists(){
 			expect(ptrEqual((void *)a, (void *)a->next), "next should get us back to the beginning");
 			expect(ptrEqual((void *)a, (void *)a->prev), "prev should get us back again too");
 			expect(ptrEqual((void *)a->data, NULL), "this should be the start node, so it's data should be empty");
-		END_CONTEXT
 		
 		NEXT_CONTEXT("adding something to list should work")
 			rlAddDataToHead(a, (void *)0x0c);

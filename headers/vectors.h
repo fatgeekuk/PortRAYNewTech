@@ -15,5 +15,5 @@ Vec *vecScale(double s, Vec *a, Vec *b);
 Vec *vecCopy(Vec *source, Vec *target);
 double vecDot(Vec *a, Vec *b);
 double vecLength(Vec *a);
-
+Vec *vecProduct(Vec *a, Vec *b, Vec *c);
 void vecPrint(Vec *a);
