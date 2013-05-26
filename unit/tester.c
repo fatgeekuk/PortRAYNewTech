@@ -6,6 +6,7 @@
 #include "test_index.h"
 char *description_stack[100];
 int description_ptr = 0;
+int firstTestInPack = 0;
 
 int total = 0;
 int failed = 0;
@@ -51,19 +52,24 @@ failureNode *record_failure(char *message){
 
 void push_description(char *description){
 	int i;
-	printf("pushing Desc: %s\n", description);
 	reportNode *newNode;
-	newNode = get_new_node(description);
-	newNode->next = NULL;
-	newNode->child = NULL;
-	if (reportBase == NULL){
-		reportBase = newNode;
-		newNode->parent = NULL;
+	
+	if (firstTestInPack == -1){
+		next_description(description);
+		firstTestInPack = 0;
 	} else {
-		current->child = newNode;
-		newNode->parent = (void *)current;
+		newNode = get_new_node(description);
+		newNode->next = NULL;
+		newNode->child = NULL;
+		if (reportBase == NULL){
+			reportBase = newNode;
+			newNode->parent = NULL;
+		} else {
+			current->child = newNode;
+			newNode->parent = (void *)current;
+		}
+		current = newNode;		
 	}
-	current = newNode;
 }
 
 void next_description(char *description){
@@ -71,12 +77,15 @@ void next_description(char *description){
 	newNode = get_new_node(description);
 	current->next = newNode;
 	newNode->parent = current->parent;
+
 	current = newNode;
 }
 
-void pop_description(){printf("POP\n");
+void pop_description(){
 	if(description_ptr > 0) description_ptr--;
-	current = (reportNode *)current->parent;
+	if (current->parent != NULL){
+		current = (reportNode *)current->parent;		
+	}
 	
 }
 
@@ -106,10 +115,10 @@ void walkTree(reportNode *node, int depth){
 	
 	printf("%s",  node->description);
 	
-	if (depth > 0 && treePassing(node, 0)){
+	/* if (depth > 10 && treePassing(node, 0)){
 		printf(colouredText, GREEN, " PASSED!");
 		printf("\n");
-	} else {
+	} else { */
 		printf("\n");
 		fail = node->failure;
 		while(fail != NULL){
@@ -126,7 +135,7 @@ void walkTree(reportNode *node, int depth){
 		}
 		
 		
-	}
+	/* } */
 	if(node->next != NULL){
 		walkTree(node->next, depth);
 	}
@@ -160,7 +169,9 @@ int main(){
 	printf("We have %d tests\n", test_count);
 	
 	push_description("Tests");
+	
 	for(i=0; i<test_count; i++){
+		firstTestInPack = -1;
 		(tests[i])();
 	}
 	

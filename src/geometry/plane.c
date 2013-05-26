@@ -14,7 +14,7 @@ plane *allocPlane(){
 	return answer;
 }
 
-void planePrint(void *ptr){
+void plaPrint(void *ptr){
 	plane *pla;
 	pla = (plane *)ptr;
 	
@@ -25,6 +25,11 @@ void planePrint(void *ptr){
 	printf("\n");
 }
 
+rlNode *plaInt(Ray *ray, void *data){
+	
+}
+
 void initPlane(){
-	planeGeomType.print = planePrint;
+	planeGeomType.print = plaPrint;
+	planeGeomType.intersect = plaInt;
 }

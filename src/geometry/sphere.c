@@ -23,6 +23,11 @@ void sphPrint(void *ptr){
 	printf("\n");
 }
 
+rlNode *sphInt(Ray *ray, void *data){
+	
+}
+
 void initSphere(){
 	sphereGeomType.print = sphPrint;
+	sphereGeomType.intersect = sphInt;
 }

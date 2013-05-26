@@ -15,6 +15,7 @@ void rlInit(){
 	rlSlabPtr = NULL;
 	rlSlabSize = 0;	
 	rlSlabsUsed = 0;
+	rlFreeChainPtr = NULL;
 };
 
 void rlAllocSlab(){
@@ -36,6 +37,17 @@ rlNode *rlGetNodeFromSlab(){
 	rlSlabPtr++;
 	rlSlabSize--;
 	return answer;
+}
+
+void displayFreeChain(){
+	rlNode *node;
+	node = rlFreeChainPtr;
+	printf("\n FREECHAIN ");
+	while (node != NULL){
+		printf(" -> %X ", node);
+		node = node->next;
+	}
+	printf("\n");
 }
 
 void *rlReleaseNode(rlNode *node){

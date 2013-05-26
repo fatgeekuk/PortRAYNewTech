@@ -196,12 +196,21 @@ plane_normal_command:
   };
 
 material_definition:
-  material_open material_commands CLOSE_CURLIES;
+  material_open material_commands material_close;
+  
+material_close:
+  CLOSE_CURLIES
+  {
+    Material *mat;
+    mat = (Material *)rlPopDataFromHead(parserStack);
+
+    ((object *)currentParserNode())->material = mat;  
+  };
   
 material_open:
   MATERIAL OPEN_CURLIES
   {
-    printf("opened material definition\n");
+    rlAddDataToHead(parserStack, allocMaterial());
   };
   
 material_commands: /* empty */
@@ -213,7 +222,7 @@ material_command:
 material_diffuse_command:
   DIFFUSE COLOUR vector
   {
-    printf("defined diffuse colour\n");
+    vecCopy(&$3, &((Material *)currentParserNode())->diffuse_colour);
   };
   
        

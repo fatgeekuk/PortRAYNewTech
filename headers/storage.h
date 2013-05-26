@@ -4,6 +4,7 @@
 #include "../headers/vectors.h"
 #include "../headers/ray.h"
 #include "../headers/camera.h"
+#include "../headers/material.h"
 #include "../headers/object.h"
 #include "../headers/geometry/sphere.h"
 #include "../headers/geometry/plane.h"

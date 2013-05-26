@@ -3,8 +3,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "../headers/object.h"
+#include "../headers/ring_list.h"
 #include "../headers/vectors.h"
+#include "../headers/ray.h"
+#include "../headers/material.h"
+#include "../headers/object.h"
 #include "../headers/geometry/plane.h"
 #include "../headers/geometry/sphere.h"
 #include "geometry/plane.c"
