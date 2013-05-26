@@ -84,9 +84,8 @@ void next_description(char *description){
 void pop_description(){
 	if(description_ptr > 0) description_ptr--;
 	if (current->parent != NULL){
-		current = (reportNode *)current->parent;		
+		current = (reportNode *)current->parent;
 	}
-	
 }
 
 void expect(int value, char* description){

@@ -1,6 +1,8 @@
 /* intersection.c - part of PortRAY NewTech Developed under GPLv3 by Peter (fatgeekuk) Morris. See https://github.com/fatgeekuk/PortRAYNewTech */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include "../headers/ring_list.h"
 #include "../headers/intersection.h"
 
 /* after the ring_list the intersection is probably the most important and heavily used area. literally BILLIONS of intersections will be created and passed around
