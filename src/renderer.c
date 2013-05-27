@@ -7,17 +7,7 @@
 #include "../headers/storage.h"
 #include "../headers/intersection.h"
 #include "../headers/targa.h"
-
-void renderIntersection(intRec *intersect, Vec *colour){
-	object *obj;
-	Material *mat;
-	
-	obj = intersect->objHit;
-	mat = obj->material;
-	
-	/* initially, we are just testing that intersections work ok, so rendering is just a case of copying the diff colour to the output */
-	vecCopy(&(mat->diffuse_colour), colour);
-}
+#include "../headers/shaders.h"
 
 void render(Camera *camera, rlNode *sceneList){
 	int x, y, done;
@@ -55,7 +45,7 @@ void render(Camera *camera, rlNode *sceneList){
 				while (done == 0){
 					intersect = (intRec *)(oList->data);
 					if (intersect->dist > 0.0){
-						renderIntersection(intersect, &colour);
+						flatDiffuseShader(intersect, &colour);
 						tgaPlot(&tgaFile, x, y, (int)(colour.x * 255.0), (int)(colour.y * 255.0), (int)(colour.z * 255.0));
 						done = -1;
 					}

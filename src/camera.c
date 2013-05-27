@@ -43,7 +43,7 @@ Ray *camGenerateRay(Camera *camera, double x, double y, Ray *ray){
 
 	/* using that and DOWN, work out the camera axes and normalise */
 	vecProduct(&direction, &(camera->down), &cameraX);
-	vecProduct(&cameraX, &direction, &cameraY);
+	vecProduct(&direction, &cameraX, &cameraY);
 	vecNormalise(&cameraX, &cameraX);
 	vecNormalise(&cameraY, &cameraY);
 	
@@ -53,9 +53,6 @@ Ray *camGenerateRay(Camera *camera, double x, double y, Ray *ray){
 	vecScale(camera->depth, &direction, &direction);
 	vecAdd(&cameraX, &direction, &direction);
 	vecAdd(&cameraY, &direction, &direction);
-	
-	/* from film position, work out direction from that through camera position */
-	vecSub(&direction, &(camera->at), &direction);
 	
 	rayInit(&(camera->at), &direction, ray);
 	return ray;
