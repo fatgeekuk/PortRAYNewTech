@@ -28,6 +28,12 @@ This will eventually generate a TGA file of the resultant scene. At the moment, 
 
 Review the WIKI for progress (or lack thereof)
 
+Command Line Options
+====================
+
+-o --output <filename> defines the output targa filename 'output.tga' if none specified.
+-v --verbose           verbose (duh), but it is not wired up yet.
+
 Goals
 =====
 
