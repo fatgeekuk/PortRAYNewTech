@@ -1,5 +1,7 @@
 /* plane.c - part of PortRAY NewTech Developed under GPLv3 by Peter (fatgeekuk) Morris. See https://github.com/fatgeekuk/PortRAYNewTech */
 
+#include <math.h>
+
 geomType planeGeomType;
 
 plane *allocPlane(){
@@ -25,11 +27,49 @@ void plaPrint(void *ptr){
 	printf("\n");
 }
 
-rlNode *plaInt(Ray *ray, void *data){
+void plaPrepare(void *data){
 	
 }
 
+rlNode *plaInt(Ray *ray, object *obj){
+	plane *pla;
+	double t1;
+	rlNode *answer;
+	intRec *intersection;
+	Vec a;
+
+	answer = irCreateList();
+	pla = (plane *)obj->gInfo;
+	
+	t1 = -vecDot(&(pla->normal), &(ray->direction));
+	if (fabs(t1) > 0.0)
+	  {
+	    intersection = irAddRec(answer);
+
+		/* int direction not needed yet 
+	    if (t1 < 0.0)
+	    {
+	      AnInt->Dirn = EXIT;
+	    }
+	    else
+	    {
+	      AnInt->Dirn = ENTRY;
+	    }
+	    */
+	
+	    vecSub(&(ray->origin), &(pla->position), &a);
+	    intersection->dist    = vecDot(&(pla->normal), &a) / t1;
+	    intersection->objHit   = obj;
+		
+		vecAdd(&(ray->origin), vecScale(intersection->dist, &(ray->direction), &a), &(intersection->modelHit));
+		vecCopy(&(intersection->modelHit), &(intersection->worldHit));
+	}
+		
+	return answer;
+}
+
 void initPlane(){
-	planeGeomType.print = plaPrint;
+	planeGeomType.print     = plaPrint;
 	planeGeomType.intersect = plaInt;
+	planeGeomType.prepare   = plaPrepare;
 }

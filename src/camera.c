@@ -38,7 +38,7 @@ Ray *camGenerateRay(Camera *camera, double x, double y, Ray *ray){
 	Vec cameraX, cameraY;
 	
 	/* work out direction camera is pointing in */
-	vecSub(&(camera->at), &(camera->lookAt), &direction);
+	vecSub(&(camera->lookAt), &(camera->at), &direction);
 	vecNormalise(&direction, &direction);
 
 	/* using that and DOWN, work out the camera axes and normalise */

@@ -2,7 +2,9 @@
 
 typedef struct intRec {
 	double dist;
-	
+	object *objHit;
+	Vec modelHit;
+	Vec worldHit;
 } intRec;
 
 rlNode *irCreateList();

@@ -2,7 +2,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "../headers/vectors.h"
+#include "../headers/ray.h"
 #include "../headers/ring_list.h"
+#include "../headers/material.h"
+#include "../headers/object.h"
 #include "../headers/intersection.h"
 
 /* after the ring_list the intersection is probably the most important and heavily used area. literally BILLIONS of intersections will be created and passed around

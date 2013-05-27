@@ -98,5 +98,5 @@ void tgaPlot(TGAFile *tgaFile, int x, int y, int r, int g, int b){
 	unsigned char *pixPtr = tgaFile->imageBase + tgaFile->pixelWidth * (tgaFile->width * y + x);
 	*pixPtr++ = b;
 	*pixPtr++ = g;
-	*pixPtr++ - r;
+	*pixPtr++ = r;
 }

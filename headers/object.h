@@ -2,7 +2,8 @@
 
 typedef struct geomType {
 	void (*print) ();
-	rlNode *(*intersect) (Ray *ray, void *data);
+	rlNode *(*intersect) (Ray *ray, void *obj);
+	void (*prepare)(void *data);
 } geomType;
 
 typedef struct object {

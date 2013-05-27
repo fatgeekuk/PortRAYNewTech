@@ -30,6 +30,7 @@ int main(int argc, char *argv[])
 {
     
     rlInit();
+    irInit();
     setupStorage();
     
     parserStack = rlCreateList();
@@ -132,6 +133,8 @@ sphere_close: CLOSE_CURLIES
       /* remove the sphere from the parser stack and place it into the object definition. */
       sphere *sph;
       sph = (sphere *)rlPopDataFromHead(parserStack);
+      
+      sphPrepare((void *)sph);
       
       ((object *)currentParserNode())->gInfo = sph;
       ((object *)currentParserNode())->gType = &sphereGeomType;

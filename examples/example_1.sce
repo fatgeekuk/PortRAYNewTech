@@ -7,7 +7,7 @@ camera {
   width 36.
   height 24.
   depth 50.
-  resolution (1024 549)
+  resolution (1024 683)
 }
 
 light {
@@ -18,11 +18,33 @@ light {
 object {
   sphere {
     radius 1.0
+    center (-0.8. 1. 0.)
+  }
+  
+  material {
+    diffuse colour (1 0 0)
+  }
+}
+
+object {
+  sphere {
+    radius 1.0
     center (0. 1. 0.)
   }
   
   material {
-    diffuse colour (1. 0. 0.)
+    diffuse colour (0 1 0)
+  }
+}
+
+object {
+  sphere {
+    radius 1.0
+    center (0.8 1 0)
+  }
+  
+  material {
+    diffuse colour (1 0 1)
   }
 }
 
@@ -33,6 +55,6 @@ object {
   }
   
   material {
-    diffuse colour (200 10 9)
+    diffuse colour (0.5, 0.5, 0.5)
   }
 }

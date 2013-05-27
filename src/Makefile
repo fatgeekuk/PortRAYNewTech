@@ -16,7 +16,7 @@ ring_list.o: ring_list.c
 camera.o: camera.c ../headers/storage.h ../headers/camera.h ../headers/vectors.h
 
 targa.o: targa.c
-	
+
 storage.o: storage.c ../headers/storage.h ../headers/camera.h ../headers/vectors.h
 
 grammar.c: grammar.y
@@ -28,7 +28,7 @@ intersection.o: intersection.c
 
 dummy_writer.o: dummy_writer.c
 
-renderer.o: renderer.c
+renderer.o: renderer.c targa.c
 
 ray.o: ray.c
 

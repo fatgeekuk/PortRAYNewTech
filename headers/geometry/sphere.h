@@ -3,8 +3,10 @@
 typedef struct sphere {
 	Vec center;
 	double radius;
+	double radSq, centDot;
 } sphere;
 
 sphere *allocSphere();
 void initSphere();
+void sphPrepare(void *data);
 extern geomType sphereGeomType;

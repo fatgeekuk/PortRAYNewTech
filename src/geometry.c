@@ -8,6 +8,7 @@
 #include "../headers/ray.h"
 #include "../headers/material.h"
 #include "../headers/object.h"
+#include "../headers/intersection.h"
 #include "../headers/geometry/plane.h"
 #include "../headers/geometry/sphere.h"
 #include "geometry/plane.c"
