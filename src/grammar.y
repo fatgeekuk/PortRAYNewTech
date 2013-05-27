@@ -6,12 +6,34 @@
 #include <stdio.h>
 #include <string.h>
 #include "../headers/storage.h"
+#include "../headers/optparse.h"
 
 extern FILE *yyin;
 extern int linenum;
  
 rlNode *parserStack;
  
+int filePtr; 
+char **args;
+int argCount;
+int verbose = 1;
+struct opt_str fn = {NULL, 0};
+char *outputFilename;
+
+struct opt_spec options[] = {
+  {opt_help, "h", "--help", OPT_NO_METAVAR, OPT_NO_HELP, OPT_NO_DATA},
+  
+  {opt_store_1, "v", "--verbose", OPT_NO_METAVAR,
+    "make lots of noise [default]", &verbose},
+    
+  {opt_store_0, "q", "--quiet", OPT_NO_METAVAR,
+    "be vewwy quiet (I’m hunting wabbits)", &verbose},
+    
+  {opt_store_str, "o", "--output", "FILE", "write output to FILE", &fn},
+  
+  {OPT_NO_ACTION}
+};
+
 void yyerror(const char *str)
 {
         fprintf(stderr,"error: %s at line %d\n",str, linenum);
@@ -19,7 +41,18 @@ void yyerror(const char *str)
  
 int yywrap()
 {
-        return 1;
+    int answer = 1;
+    while(1){
+      filePtr++;
+      if (filePtr >= argCount) break;
+      if (*args[filePtr] && args[filePtr] != fn.s){
+        printf("opening %s\n", args[filePtr]);
+        yyin=fopen(args[filePtr], "r");
+        answer = 0;
+      }
+    }
+    filePtr++;
+    return answer;
 } 
 
 void reportError(char *message){
@@ -28,15 +61,40 @@ void reportError(char *message){
   
 int main(int argc, char *argv[])
 {
+    int i;
+    argCount = argc;
+    args = argv;
     
     rlInit();
     irInit();
     setupStorage();
     
+    opt_basename(argv[0], '/');
+    if (opt_parse("usage: %s [options] arg1 ...", options, argv) == 0) {
+      fprintf(stderr, "%s [options] <scenefile> ... : at least 1 scene file required\n", argv[0]);
+      exit(EXIT_FAILURE);
+    }
+    printf("noise level: %s\n", verbose ? "verbose" : "quiet");
+    if (fn.s) {
+      fn.s[0] = fn.s0;
+      outputFilename = fn.s;
+    }
+    else
+      outputFilename = "output.tga";
+    
+    for (i = 1; i < argc; ++i) {
+      printf("i = %d, %d\n", i, argc);
+      if (*argv[i] && argv[i] != fn.s){
+        printf("QQ %s\n", argv[i]);
+        filePtr = i; break;
+      
+      }
+    }
+    
     parserStack = rlCreateList();
 
     /* Call the lexer, then quit. */
-    yyin=fopen(argv[1],"r");
+    yyin=fopen(argv[filePtr],"r");
     yyparse();
     fclose(yyin);
     

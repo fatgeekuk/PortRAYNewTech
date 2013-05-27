@@ -43,3 +43,9 @@ Don't expect this ever to be finished. If it starts approaching the functiality 
 surprised.
 
 Finally, this is being released under GPLv3. So, it cannot be used in closed source product without my consent.
+
+Acknowledgements
+================
+
+Parsing ........ Our good friends FLEX and BISON.
+Option handling ........ Dr R A Litherland (many thanks!)

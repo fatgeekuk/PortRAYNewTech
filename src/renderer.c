@@ -9,6 +9,8 @@
 #include "../headers/targa.h"
 #include "../headers/shaders.h"
 
+extern char *outputFilename;
+
 void render(Camera *camera, rlNode *sceneList){
 	int x, y, done;
 	rlNode *l, *sList, *oList;
@@ -18,7 +20,7 @@ void render(Camera *camera, rlNode *sceneList){
 	Vec colour;
 	
 	TGAFile tgaFile;
-	tgaInit(&tgaFile, "output.tga", camera->resX, camera->resY);
+	tgaInit(&tgaFile, outputFilename, camera->resX, camera->resY);
 	
 	for(y=0; y<camera->resY; y++){
 		printf("."); fflush(stdout);
