@@ -2,7 +2,6 @@
 
 #include <stdlib.h>
 #include "../test_helper.h"
-#include "../../headers/ring_list.h"
 #include "../../src/intersection.c"
 
 void test_intersection(){

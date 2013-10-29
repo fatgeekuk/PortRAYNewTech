@@ -9,7 +9,7 @@
 
 vectors.o: vectors.c
 
-geometry.o: geometry.c geometry/plane.c geometry/sphere.c ../headers/object.h
+geometry.o: geometry.c geometry/plane.c geometry/sphere.c geometry/box.c ../headers/object.h
 
 ring_list.o: ring_list.c
 

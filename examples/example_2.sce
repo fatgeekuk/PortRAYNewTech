@@ -11,6 +11,17 @@ camera {
 }
 
 object {
+  box {
+    a (-2 -1 -1)
+    b (-1 1 1)
+  }
+
+  material {
+    diffuse colour (0.5 0.5 0.5)
+  }
+}
+
+object {
   sphere {
     radius 1.0
     center (-0.8. 1. 1.)

@@ -11,4 +11,5 @@ void setupStorage(){
 	/* initialise geometries */
 	initSphere();
 	initPlane();
+	initBox();
 }

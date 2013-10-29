@@ -8,6 +8,7 @@
 #include "../headers/object.h"
 #include "../headers/geometry/sphere.h"
 #include "../headers/geometry/plane.h"
+#include "../headers/geometry/box.h"
 
 extern Camera camera;
 extern rlNode *sceneList;

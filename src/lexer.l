@@ -10,29 +10,46 @@ int linenum = 1;
 %}
 %%
 -?[0-9]+(\.[0-9]+)?       { yylval.dValue = atof(yytext); return FLOAT; };
+include\s\"[^\"]\" {
+  printf("Got include file %s\n", yytext);
+}
+<<EOF>> {
+          yypop_buffer_state();
+     
+          if ( !YY_CURRENT_BUFFER )
+          {
+            yyterminate();
+          }
+        }
 camera                  return TOK_CAMERA;
 \{                      return OPEN_CURLIES;
 \}                      return CLOSE_CURLIES;
 \(                      return OPENBRACKET;
 \)                      return TOK_CLOSEBRACKET;
 at                      return TOK_AT;
-down                    return TOK_DOWN;
-look-at                 return TOK_LOOKAT;
-width                   return TOK_WIDTH;
-height                  return TOK_HEIGHT;
-depth                   return TOK_DEPTH;
-resolution              return TOK_RESOLUTION;
-light                   return LIGHT;
-position                return POSITION;
-colour                  return COLOUR;
-object                  return OBJECT;
-sphere                  return SPHERE;
-plane                   return PLANE;
+ambient                 return AMBIENT;
 center                  return CENTER;
-radius                  return RADIUS;
-normal                  return NORMAL;
-material                return MATERIAL;
+colour                  return COLOUR;
+depth                   return TOK_DEPTH;
 diffuse                 return DIFFUSE;
+directional             return DIRECTIONAL;
+down                    return TOK_DOWN;
+height                  return TOK_HEIGHT;
+look-at                 return TOK_LOOKAT;
+light                   return LIGHT;
+material                return MATERIAL;
+normal                  return NORMAL;
+object                  return OBJECT;
+plane                   return PLANE;
+box											return BOX;
+point                   return POINT;
+position                return POSITION;
+radius                  return RADIUS;
+resolution              return TOK_RESOLUTION;
+sphere                  return SPHERE;
+width                   return TOK_WIDTH;
+a 											return BOXA;
+b                       return BOXB;
 \n                      linenum++;
 [ \t]+                  /* ignore whitespace */;
 \/\/.*                  /* ignore comments */;

@@ -122,11 +122,13 @@ void *currentParserNode(){
 %token <dValue> FLOAT
 
 
-%token TOK_CAMERA TOK_OBJECT OPEN_CURLIES CLOSE_CURLIES TOK_AT TOK_DOWN OPENBRACKET TOK_CLOSEBRACKET TOK_LOOKAT TOK_WIDTH TOK_HEIGHT TOK_DEPTH TOK_RESOLUTION LIGHT COLOUR POSITION OBJECT MATERIAL DIFFUSE
+%token TOK_CAMERA TOK_OBJECT OPEN_CURLIES CLOSE_CURLIES TOK_AT TOK_DOWN OPENBRACKET TOK_CLOSEBRACKET TOK_LOOKAT TOK_WIDTH TOK_HEIGHT TOK_DEPTH TOK_RESOLUTION LIGHT COLOUR POSITION OBJECT MATERIAL DIFFUSE DIRECTIONAL POINT AMBIENT
 
-%token SPHERE PLANE
+%token SPHERE PLANE BOX
 %token CENTER RADIUS
 %token NORMAL
+%token BOXA
+%token BOXB
 
 %%
 commands: /* empty */
@@ -171,8 +173,51 @@ object_command:
       
 shape_definition:
      sphere_definition
-     | plane_definition;
+     | plane_definition
+     | box_definition;
      
+box_definition:
+    box_open box_commands box_close
+    {
+      printf("read a box definition\n");
+    };
+
+box_open:
+    BOX OPEN_CURLIES
+    {
+      /* allocate a box and place it on the parserStack */
+      rlAddDataToHead(parserStack, allocBox());
+    };
+
+box_close: CLOSE_CURLIES
+  {
+    /* remove the box from the parser stack and place it into the object definition. */
+    box *bx;
+    bx = (box *)rlPopDataFromHead(parserStack);
+    boxPrepare((void *)bx);
+    ((object *)currentParserNode())->gInfo = bx;
+    ((object *)currentParserNode())->gType = &boxGeomType;
+  };
+
+box_commands: /* empty */
+    | box_commands box_command;
+
+box_command:
+  box_a_command
+  | box_b_command;
+
+box_a_command:
+  BOXA vector
+  {
+    vecCopy(&$2, &((box *)currentParserNode())->a);
+  };
+
+box_b_command:
+  BOXB vector
+  {
+    vecCopy(&$2, &((box *)currentParserNode())->b);  
+  }
+
 sphere_definition: 
     sphere_open sphere_commands sphere_close
     {
@@ -196,7 +241,7 @@ sphere_close: CLOSE_CURLIES
       
       ((object *)currentParserNode())->gInfo = sph;
       ((object *)currentParserNode())->gType = &sphereGeomType;
-    }
+    };
     
 sphere_commands: /* empty */
     | sphere_commands sphere_command;
@@ -289,26 +334,70 @@ material_diffuse_command:
        
         
 light_definition:
-        light_open light_commands CLOSE_CURLIES
+        ambient_light_definition |
+        point_light_definition |
+        directional_light_definition;
+        
+ambient_light_definition:
+        ambient_light_open ambient_light_commands CLOSE_CURLIES
         {
-          printf("Encountered a light defintiion\n");
+          printf("Encountered an ambient light defintiion\n");
         };
         
-light_open:
-        LIGHT OPEN_CURLIES
+ambient_light_open:
+        AMBIENT LIGHT OPEN_CURLIES
         {
-          printf("opening light\n");
+          printf("opening amb. light\n");
         };
         
-light_commands: /* empty */
-        | light_commands light_command
+ambient_light_commands: /* empty */
+        | ambient_light_commands ambient_light_command
         ;
         
-light_command:
-        light_position_command
-        |
+ambient_light_command:
         light_colour_command
         ;
+
+point_light_definition:
+        point_light_open point_light_commands CLOSE_CURLIES
+        {
+          printf("Encountered a point light defintion\n");
+        };
+
+point_light_open:
+        POINT LIGHT OPEN_CURLIES
+        {
+          printf("opening point light\n");
+        };
+
+point_light_commands: /* empty */
+        | point_light_commands point_light_command
+        ;
+
+point_light_command:
+        light_colour_command
+        ;
+        
+directional_light_definition:
+        directional_light_open directional_light_commands CLOSE_CURLIES
+        {
+          printf("Encountered a directional light defintion\n");
+        };
+
+directional_light_open:
+        DIRECTIONAL LIGHT OPEN_CURLIES
+        {
+          printf("opening directional light\n");
+        };
+
+directional_light_commands: /* empty */
+        | directional_light_commands directional_light_command
+        ;
+
+directional_light_command:
+        light_colour_command
+        ;
+
         
 light_position_command:
         POSITION vector

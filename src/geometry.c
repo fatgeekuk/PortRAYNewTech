@@ -11,5 +11,7 @@
 #include "../headers/intersection.h"
 #include "../headers/geometry/plane.h"
 #include "../headers/geometry/sphere.h"
+#include "../headers/geometry/box.h"
 #include "geometry/plane.c"
 #include "geometry/sphere.c"
+#include "geometry/box.c"
