@@ -42,27 +42,10 @@ rlNode *plaInt(Ray *ray, object *obj){
 	pla = (plane *)obj->gInfo;
 	
 	t1 = -vecDot(&(pla->normal), &(ray->direction));
-	if (fabs(t1) > 0.0)
-	  {
-	    intersection = irAddRec(answer);
+	if (fabs(t1) > 0.0){
+    vecSub(&(ray->origin), &(pla->position), &a);
 
-		/* int direction not needed yet 
-	    if (t1 < 0.0)
-	    {
-	      AnInt->Dirn = EXIT;
-	    }
-	    else
-	    {
-	      AnInt->Dirn = ENTRY;
-	    }
-	    */
-	
-	    vecSub(&(ray->origin), &(pla->position), &a);
-	    intersection->dist    = vecDot(&(pla->normal), &a) / t1;
-	    intersection->objHit   = obj;
-		
-		vecAdd(&(ray->origin), vecScale(intersection->dist, &(ray->direction), &a), &(intersection->modelHit));
-		vecCopy(&(intersection->modelHit), &(intersection->worldHit));
+    irRecordIntersection(ray, answer, obj, vecDot(&(pla->normal), &a) / t1);
 	}
 		
 	return answer;

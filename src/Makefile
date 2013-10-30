@@ -1,8 +1,8 @@
 ../bin/dummy_writer: dummy_writer.o vectors.o targa.o
 	gcc -o $@ $< vectors.o targa.o -lm
 
-../bin/portray: grammar.o vectors.o targa.o lexer.o storage.o camera.o ring_list.o geometry.o renderer.o ray.o material.o intersection.o shaders.o optparse.o
-	gcc -o $@ grammar.o vectors.o targa.o lexer.o storage.o camera.o ring_list.o geometry.o renderer.o ray.o material.o intersection.o shaders.o optparse.o -lm
+../bin/portray: grammar.o vectors.o targa.o lexer.o storage.o camera.o ring_list.o geometry.o renderer.o ray.o material.o intersection.o shaders.o optparse.o chatterbox.o
+	gcc -o $@ grammar.o vectors.o targa.o lexer.o storage.o camera.o ring_list.o geometry.o renderer.o ray.o material.o intersection.o shaders.o optparse.o chatterbox.o -lm
 	
 .c.o:
 	gcc -o $@ -g -c -O2 $<
@@ -37,6 +37,8 @@ shaders.o: shaders.c shaders/flat_diffuse.c
 ray.o: ray.c
 
 material.o: material.c
+
+chatterbox.o: chatterbox.c
 
 lexer.c: lexer.l
 	flex -o $@ $<

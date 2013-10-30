@@ -129,3 +129,15 @@ rlNode *irMergeLists(rlNode *a, rlNode *b){
 	
 	return answer;
 }
+
+void irRecordIntersection(Ray *ray, rlNode *list, object *obj, double dist){
+	Vec a;
+	intRec *intersection;
+
+	intersection = irAddRec(list);
+
+	intersection->dist = dist;
+	vecAdd(&(ray->origin), vecScale(intersection->dist, &(ray->direction), &a), &(intersection->modelHit));
+	vecCopy(&(intersection->modelHit), &(intersection->worldHit));
+	intersection->objHit = obj;
+}

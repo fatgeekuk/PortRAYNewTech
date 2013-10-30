@@ -48,6 +48,7 @@ radius                  return RADIUS;
 resolution              return TOK_RESOLUTION;
 sphere                  return SPHERE;
 width                   return TOK_WIDTH;
+emissive								return EMISSIVE;
 a 											return BOXA;
 b                       return BOXB;
 \n                      linenum++;

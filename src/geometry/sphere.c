@@ -55,20 +55,8 @@ rlNode *sphInt(Ray *ray, object *obj){
 		t1 = (-b - d) / a;
 		t2 = (-b + d) / a;
 
-		intersection = irAddRec(answer);
-	    intersection->dist = t1;
-		vecAdd(&(ray->origin), vecScale(intersection->dist, &(ray->direction), &V), &(intersection->modelHit));
-		vecCopy(&(intersection->modelHit), &(intersection->worldHit));
-		/* AnInt->Dirn	    = ENTRY; */
-		intersection->objHit = obj;
-
-		intersection = irAddRec(answer);
-
-	    intersection->dist = t2;
-		vecAdd(&(ray->origin), vecScale(intersection->dist, &(ray->direction), &V), &(intersection->modelHit));
-		vecCopy(&(intersection->modelHit), &(intersection->worldHit));
-		/* AnInt->Dirn	    = ENTRY; */
-		intersection->objHit = obj;
+		irRecordIntersection(ray, answer, obj, t1);
+		irRecordIntersection(ray, answer, obj, t2);
 	}
 
 	return answer;	

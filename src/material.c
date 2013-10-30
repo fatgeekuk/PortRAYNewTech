@@ -6,6 +6,11 @@
 #include "../headers/vectors.h"
 #include "../headers/material.h"
 
+void materialInit(Material *mat){
+	vecSet(0.0,0.0,0.0, &(mat->diffuse_colour));
+	vecSet(0.0,0.0,0.0, &(mat->emissive_colour));
+}
+
 Material *allocMaterial(){
 	Material *answer;
 	
@@ -13,7 +18,10 @@ Material *allocMaterial(){
 	if (answer == NULL){
 		printf("unable to allocate a material\n");
 		exit(1);
+	} else {
+		materialInit(answer);
 	}
 	
 	return answer;
 }
+

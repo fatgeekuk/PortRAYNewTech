@@ -8,8 +8,10 @@
 #include "../headers/intersection.h"
 #include "../headers/targa.h"
 #include "../headers/shaders.h"
+#include "../headers/chatterbox.h"
 
 extern char *outputFilename;
+extern int verbose;
 
 void render(Camera *camera, rlNode *sceneList){
 	int x, y, done;
@@ -19,6 +21,8 @@ void render(Camera *camera, rlNode *sceneList){
 	Ray ray;
 	Vec colour;
 	
+  cbStart();
+
 	TGAFile tgaFile;
 	tgaInit(&tgaFile, outputFilename, camera->resX, camera->resY);
 	
@@ -55,7 +59,6 @@ void render(Camera *camera, rlNode *sceneList){
 					oList = oList->next;
 					if (oList->data == NULL) done = -1;
 				}
-				
 			}
 
 			/* finally, free the scene list for this ray before we continue */
@@ -65,14 +68,8 @@ void render(Camera *camera, rlNode *sceneList){
 	
 	tgaClose(&tgaFile);
 	
-    printf("scene contains %d items\n", rlListLength(sceneList));
-    l = sceneList->next;
-    while (l->data != NULL){
-      o = (object *)l->data;
-      
-      (o->gType->print)(o->gInfo);
-      
-      l = l->next;
-    }
+	cbEnd();
+
+	if (verbose) cbReport();
 	
 }

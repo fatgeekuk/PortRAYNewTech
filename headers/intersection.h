@@ -12,3 +12,5 @@ rlNode *irCreateList();
 intRec *irAddRec(rlNode *list);
 void irReclaimList(rlNode *list);
 rlNode *irMergeLists(rlNode *a, rlNode *b); /* NOTE, this is destructive, lists a and b are released */
+
+void irRecordIntersection(Ray *ray, rlNode *list, object *obj, double dist);

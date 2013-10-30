@@ -2,6 +2,7 @@
 
 typedef struct Material {
 	Vec diffuse_colour;
+	Vec emissive_colour;
 } Material;
 
 Material *allocMaterial();

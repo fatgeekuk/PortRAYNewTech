@@ -1,0 +1,14 @@
+
+optimise camera ray generation code to speed things up, currently, 3/4 of it is static camera related stuff that can be factored out
+
+implemenet alternate rendering methods to allow statistical beam tracing etc
+
+add immisive colour to materials
+
+
+DONE List
+
+factor out intersection initialisation code from the current geometry files, simplying the implementation of future geometries
+
+add tracker code to record how long things take and output tracking information to assist with debugging/optimisations
+

@@ -16,7 +16,7 @@ rlNode *parserStack;
 int filePtr; 
 char **args;
 int argCount;
-int verbose = 1;
+int verbose = 0;
 struct opt_str fn = {NULL, 0};
 char *outputFilename;
 
@@ -122,7 +122,7 @@ void *currentParserNode(){
 %token <dValue> FLOAT
 
 
-%token TOK_CAMERA TOK_OBJECT OPEN_CURLIES CLOSE_CURLIES TOK_AT TOK_DOWN OPENBRACKET TOK_CLOSEBRACKET TOK_LOOKAT TOK_WIDTH TOK_HEIGHT TOK_DEPTH TOK_RESOLUTION LIGHT COLOUR POSITION OBJECT MATERIAL DIFFUSE DIRECTIONAL POINT AMBIENT
+%token TOK_CAMERA TOK_OBJECT OPEN_CURLIES CLOSE_CURLIES TOK_AT TOK_DOWN OPENBRACKET TOK_CLOSEBRACKET TOK_LOOKAT TOK_WIDTH TOK_HEIGHT TOK_DEPTH TOK_RESOLUTION LIGHT COLOUR POSITION OBJECT MATERIAL DIFFUSE DIRECTIONAL POINT AMBIENT EMISSIVE
 
 %token SPHERE PLANE BOX
 %token CENTER RADIUS
@@ -323,16 +323,21 @@ material_commands: /* empty */
   | material_commands material_command;
   
 material_command:
-  material_diffuse_command;
+  material_diffuse_command
+  | material_emissive_command;
   
 material_diffuse_command:
   DIFFUSE COLOUR vector
   {
     vecCopy(&$3, &((Material *)currentParserNode())->diffuse_colour);
   };
-  
-       
-        
+
+material_emissive_command:
+  EMISSIVE COLOUR vector
+  {
+    vecCopy(&$3, &((Material *)currentParserNode())->emissive_colour);  
+  }  
+
 light_definition:
         ambient_light_definition |
         point_light_definition |

@@ -32,7 +32,7 @@ void boxPrepare(void *data){
 	bx = (box *)data;
 
 	double t;
-printf("in bx prep\n");
+
 	/* we need to ensure that all the values of A are lower than values of B */
 	if (bx->a.x > bx->b.x)
   {
@@ -54,8 +54,6 @@ printf("in bx prep\n");
   	bx->a.z = bx->b.z;
   	bx->b.z = t;
   }
-
-  printf("outta bx prep\n");
 
 }
 
@@ -154,22 +152,10 @@ rlNode *boxInt(Ray *ray, object *obj){
     {
       printf("R=A(%f %f %f) + nB(%f %f %f)\n", ray->origin.x, ray->origin.y, ray->origin.z, ray->direction.x, ray->direction.y, ray->direction.z);
     }
-    printf("BOX min=%f max=%f\n", Imin, Imax);
 
-		intersection = irAddRec(answer);
-	  intersection->dist = Imin;
-		vecAdd(&(ray->origin), vecScale(intersection->dist, &(ray->direction), &a), &(intersection->modelHit));
-		vecCopy(&(intersection->modelHit), &(intersection->worldHit));
-		intersection->objHit = obj;
-
-		intersection = irAddRec(answer);
-	  intersection->dist = Imax;
-		vecAdd(&(ray->origin), vecScale(intersection->dist, &(ray->direction), &a), &(intersection->modelHit));
-		vecCopy(&(intersection->modelHit), &(intersection->worldHit));
-		intersection->objHit = obj;
+    irRecordIntersection(ray, answer, obj, Imin);
+    irRecordIntersection(ray, answer, obj, Imax);
   }
-
-  printf("outta box\n"); 
 
 	return answer;
 }
