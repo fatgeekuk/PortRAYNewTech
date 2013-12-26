@@ -24,7 +24,7 @@ int tgaInit(TGAFile *tgaFile, char *filename, int width, int height){
 	printf("Calculated Length as %d\n", tgaFile->length);
 	// open file for read and write;
 	printf("opening file %s\n", filename);
-	fd = open(filename, O_RDWR | O_CREAT);
+	fd = open(filename, O_RDWR | O_CREAT, S_IRWXU);
 	fchmod(fd, S_IRUSR | S_IWUSR);
 	
 	if (fd != -1){

@@ -7,4 +7,4 @@
 #include "../headers/storage.h"
 #include "../headers/intersection.h"
 
-#include "shaders/flat_diffuse.c"
+#include "renderers/flat_diffuse.c"

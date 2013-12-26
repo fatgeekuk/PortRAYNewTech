@@ -9,8 +9,11 @@
 #include "../headers/geometry/sphere.h"
 #include "../headers/geometry/plane.h"
 #include "../headers/geometry/box.h"
+#include "../headers/illumination_models.h"
 
 extern Camera camera;
 extern rlNode *sceneList;
+extern rlNode *imList;
+extern int (*illuminationModel)(Ray *ray, Vec *colour);
 
 void setupStorage();

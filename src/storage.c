@@ -4,6 +4,8 @@
 
 Camera camera;
 rlNode *sceneList;
+rlNode *imList;
+int (*illuminationModel)(Ray *ray, Vec *colour);
 
 void setupStorage(){
 	sceneList = rlCreateList();
@@ -12,4 +14,7 @@ void setupStorage(){
 	initSphere();
 	initPlane();
 	initBox();
+
+	/* initialise illumination models */
+    initIMs();
 }

@@ -14,14 +14,12 @@ extern char *outputFilename;
 extern int verbose;
 
 void render(Camera *camera, rlNode *sceneList){
-	int x, y, done;
-	rlNode *l, *sList, *oList;
-    object *o;
-	intRec *intersect;
+	int x, y;
+
 	Ray ray;
 	Vec colour;
 	
-  cbStart();
+  	cbStart();
 
 	TGAFile tgaFile;
 	tgaInit(&tgaFile, outputFilename, camera->resX, camera->resY);
@@ -32,37 +30,10 @@ void render(Camera *camera, rlNode *sceneList){
 		for(x=0; x<camera->resX; x++){
 			camGenerateRay(camera, ((double)x/((double)(camera->resX-1))) - 0.5, ((double)y/((double)(camera->resY-1))) - 0.5, &ray);
 			
-			/* intersect with the scene */
-			l = sceneList->next;
-			sList = irCreateList();
-			while (l->data != NULL){
-				o = (object *)l->data;
-				oList = (o->gType->intersect)(&ray, o);
-				
-				sList = irMergeLists(sList, oList);
-				
-				l = l->next;
+			if ((illuminationModel)(&ray, &colour)){
+				tgaPlot(&tgaFile, x, y, (int)(colour.x * 255.0), (int)(colour.y * 255.0), (int)(colour.z * 255.0));	
 			}
 			
-			/* find the first intersection in front of the camera and render it */
-			if (rlListEmpty(sList) == 0){
-				oList = sList->next;
-				done = 0;
-				while (done == 0){
-					intersect = (intRec *)(oList->data);
-					if (intersect->dist > 0.0){
-						flatDiffuseShader(intersect, &colour);
-						tgaPlot(&tgaFile, x, y, (int)(colour.x * 255.0), (int)(colour.y * 255.0), (int)(colour.z * 255.0));
-						done = -1;
-					}
-					
-					oList = oList->next;
-					if (oList->data == NULL) done = -1;
-				}
-			}
-
-			/* finally, free the scene list for this ray before we continue */
-			irReclaimList(sList);
 		}
 	}
 	
