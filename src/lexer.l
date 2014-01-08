@@ -10,6 +10,7 @@ int linenum = 1;
 %}
 %%
 -?[0-9]+(\.[0-9]+)?       { yylval.dValue = atof(yytext); return FLOAT; };
+
 include\s\"[^\"]\" {
   printf("Got include file %s\n", yytext);
 }
@@ -20,7 +21,7 @@ include\s\"[^\"]\" {
           {
             yyterminate();
           }
-        }
+        };
 camera                  return TOK_CAMERA;
 \{                      return OPEN_CURLIES;
 \}                      return CLOSE_CURLIES;
@@ -49,9 +50,11 @@ resolution              return TOK_RESOLUTION;
 sphere                  return SPHERE;
 width                   return TOK_WIDTH;
 emissive								return EMISSIVE;
+illumination            return ILLUMINATION;
 a 											return BOXA;
 b                       return BOXB;
 \n                      linenum++;
 [ \t]+                  /* ignore whitespace */;
+[a-z]+					  { strcpy(&(yylval.sValue), yytext); return WORD; };
 \/\/.*                  /* ignore comments */;
 %%

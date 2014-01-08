@@ -8,6 +8,7 @@ camera {
   height 24.
   depth 50.
   resolution (1024 683)
+  illumination beam
 }
 
 object {

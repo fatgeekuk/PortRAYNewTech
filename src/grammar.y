@@ -56,7 +56,8 @@ int yywrap()
 } 
 
 void reportError(char *message){
-  fprintf(stderr, "error at line %d, %s\n", linenum, message);
+  /* fprintf(stderr, "error at line %d, %s\n", linenum, message); */
+  fprintf(stderr, "error %s\n", message);
 }
   
 int main(int argc, char *argv[])
@@ -115,14 +116,16 @@ void *currentParserNode(){
   double dValue;
   int iValue;
   Vec vValue;
+  char sValue[100];
 }
 
 %type <iValue> integer
 %type <vValue> vector
 %token <dValue> FLOAT
+%token <sValue> WORD
 
 
-%token TOK_CAMERA TOK_OBJECT OPEN_CURLIES CLOSE_CURLIES TOK_AT TOK_DOWN OPENBRACKET TOK_CLOSEBRACKET TOK_LOOKAT TOK_WIDTH TOK_HEIGHT TOK_DEPTH TOK_RESOLUTION LIGHT COLOUR POSITION OBJECT MATERIAL DIFFUSE DIRECTIONAL POINT AMBIENT EMISSIVE
+%token TOK_CAMERA TOK_OBJECT OPEN_CURLIES CLOSE_CURLIES TOK_AT TOK_DOWN OPENBRACKET TOK_CLOSEBRACKET TOK_LOOKAT TOK_WIDTH TOK_HEIGHT TOK_DEPTH TOK_RESOLUTION LIGHT COLOUR POSITION OBJECT MATERIAL DIFFUSE DIRECTIONAL POINT AMBIENT EMISSIVE ILLUMINATION
 
 %token SPHERE PLANE BOX
 %token CENTER RADIUS
@@ -402,8 +405,7 @@ directional_light_commands: /* empty */
 directional_light_command:
         light_colour_command
         ;
-
-        
+     
 light_position_command:
         POSITION vector
         {
@@ -459,6 +461,8 @@ camera_command:
         cam_depth_command
         |
         cam_resolution_command
+        |
+        select_illumination
         ;
         
 cam_resolution_command:
@@ -506,7 +510,26 @@ cam_down_command:
        {
           vecCopy(&$2, &(camera.down));
        };
-       
+
+select_illumination:
+      ILLUMINATION WORD
+      {
+          rlNode *l;
+          imEntry *entry;
+
+          l = imList->next;
+          while (l->data != NULL){
+            entry = (imEntry *)l->data;
+
+            if (strcmp($2, entry->name)==0){
+              printf("found im with name %s matches\n", entry->name);
+              illuminationModel = entry->cast;
+            }
+    
+            l = l->next;
+          }
+      };
+
 vector: OPENBRACKET FLOAT FLOAT FLOAT TOK_CLOSEBRACKET
       {
         vecSet($2, $3, $4, &$$);

@@ -7,10 +7,12 @@
 #include "../headers/intersection.h"
 
 #include "illumination_models/flat.c"
+#include "illumination_models/beam.c"
 
 void initIMs(){
 	imList = rlCreateList();
 
 	rlAddDataToHead(imList, initFlatIM());
+	rlAddDataToHead(imList, initBeamIM());
 };
 
